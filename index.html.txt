@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Uma Vez</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      font-size: 32px;
+      background-color: #111;
+      color: #f5f5f5;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="texto"></div>
+
+  <script>
+    const frases = [
+      "você já leu isso",
+      "isso não vai aparecer de novo",
+      "continue clicando",
+      "quase no fim",
+      "não tem mais nada aqui"
+    ];
+
+    let vistas = JSON.parse(localStorage.getItem("frasesVistas")) || [];
+
+    function novaFrase() {
+      const restantes = frases.filter(f => !vistas.includes(f));
+
+      if (restantes.length === 0) {
+        document.getElementById("texto").innerText = "acabou.";
+        return;
+      }
+
+      const frase = restantes[Math.floor(Math.random() * restantes.length)];
+      vistas.push(frase);
+      localStorage.setItem("frasesVistas", JSON.stringify(vistas));
+
+      document.getElementById("texto").innerText = frase;
+    }
+
+    novaFrase();
+    document.body.addEventListener("click", novaFrase);
+  </script>
+
+</body>
+</html>
+
